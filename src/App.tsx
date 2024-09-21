@@ -14,7 +14,6 @@ interface Job {
 const App: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
 
-  // 新しい求人を追加する関数
   const addJob = (job: Job) => {
     setJobs(prevJobs => [...prevJobs, job]);
   };
@@ -22,13 +21,12 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="p-4">
-        {/* ヘッダーの部分 */}
-        <header className="flex justify-between items-center mb-4">
-          <h1 className="text-3xl font-bold">求人検索アプリ</h1>
+        {/* ヘッダー部分：背景を紺色に変更 */}
+        <header className="flex justify-between items-center mb-4 p-4 bg-blue-900">
+          <h1 className="text-3xl font-bold text-white">求人検索アプリ</h1>
           
-          {/* リンクのラッパー */}
           <div className="flex space-x-4">
-            {/* **赤**: 左に「求人検索」リンクを追加 */}
+            {/* 求人検索リンク */}
             <Link 
               to="/" 
               className="bg-gray-500 text-white p-2 rounded hover:bg-gray-700"
@@ -36,7 +34,7 @@ const App: React.FC = () => {
               求人検索
             </Link>
 
-            {/* 「求人投稿」リンク */}
+            {/* 求人投稿リンク */}
             <Link 
               to="/post" 
               className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
@@ -46,7 +44,6 @@ const App: React.FC = () => {
           </div>
         </header>
 
-        {/* ルーティング */}
         <Routes>
           <Route path="/" element={<JobSearch />} />
           <Route path="/post" element={<JobPost addJob={addJob} />} />

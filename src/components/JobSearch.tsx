@@ -35,8 +35,8 @@ const JobSearch: React.FC = () => {
 
   return (
     <div className="flex">
-      {/* 左のフィルターセクション */}
-      <div className="w-1/4 p-4">
+      {/* 左のフィルターセクション：背景を灰色に変更 */}
+      <div className="w-1/4 p-4 bg-gray-200">
         <h2 className="text-xl font-bold">カテゴリ</h2>
         <div>
           <label>

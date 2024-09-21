@@ -28,19 +28,10 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold">求人投稿</h1>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label className="block text-lg font-semibold">タイトル</label>
-          <input
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border p-2 w-full"
-            required
-          />
-        </div>
+      <h1 className="text-2xl font-bold mb-4">求人投稿</h1>
 
+      <form onSubmit={handleSubmit}>
+        {/* 並び順の変更：カテゴリ選択、年収入力、タイトル入力 */}
         <div className="mb-4">
           <label className="block text-lg font-semibold">カテゴリ</label>
           <select
@@ -50,7 +41,6 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
             required
           >
             <option value="">選択してください</option>
-            {/* カテゴリを選択肢として追加 */}
             <option value="事務">事務</option>
             <option value="エンジニア">エンジニア</option>
             <option value="営業">営業</option>
@@ -65,13 +55,24 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-lg font-semibold">年収</label>
+          <label className="block text-lg font-semibold">年収（万円）</label>
           <input
             type="number"
             value={salary}
             onChange={(e) => setSalary(Number(e.target.value))}
             className="border p-2 w-full"
             placeholder="年収を入力"
+            required
+          />
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-lg font-semibold">タイトル</label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="border p-2 w-full"
             required
           />
         </div>

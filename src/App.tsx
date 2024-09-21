@@ -12,7 +12,6 @@ interface Job {
 }
 
 const App: React.FC = () => {
-  // useState に Job 型の配列を指定
   const [jobs, setJobs] = useState<Job[]>([]);
 
   // 新しい求人を追加する関数
@@ -23,12 +22,31 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="p-4">
-        <header className="flex justify-between">
+        {/* ヘッダーの部分 */}
+        <header className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold">求人検索アプリ</h1>
-          <Link to="/post" className="bg-blue-500 text-white p-2 rounded">
-            求人投稿
-          </Link>
+          
+          {/* リンクのラッパー */}
+          <div className="flex space-x-4">
+            {/* **赤**: 左に「求人検索」リンクを追加 */}
+            <Link 
+              to="/" 
+              className="bg-gray-500 text-white p-2 rounded hover:bg-gray-700"
+            >
+              求人検索
+            </Link>
+
+            {/* 「求人投稿」リンク */}
+            <Link 
+              to="/post" 
+              className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700"
+            >
+              求人投稿
+            </Link>
+          </div>
         </header>
+
+        {/* ルーティング */}
         <Routes>
           <Route path="/" element={<JobSearch />} />
           <Route path="/post" element={<JobPost addJob={addJob} />} />

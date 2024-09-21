@@ -1,3 +1,4 @@
+// JobSearch.tsx
 import React, { useState } from 'react';
 
 interface Job {
@@ -13,7 +14,7 @@ interface JobSearchProps {
 
 const JobSearch: React.FC<JobSearchProps> = ({ jobs }) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [salaryRange, setSalaryRange] = useState<number>(0);
+  const [salaryRange, setSalaryRange] = useState<number | ''>(''); // ここを修正
 
   const handleCategoryChange = (category: string) => {
     setSelectedCategories(prev =>
@@ -23,13 +24,16 @@ const JobSearch: React.FC<JobSearchProps> = ({ jobs }) => {
     );
   };
 
-  const handleSalaryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSalaryRange(Number(event.target.value));
+  const handleSalaryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = event.target.value;
+    setSalaryRange(value === '' ? '' : Number(value)); // 数値に変換
   };
+
+  const salaryOptions = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
 
   const filteredJobs = jobs.filter(job =>
     (selectedCategories.length === 0 || selectedCategories.includes(job.category)) &&
-    (salaryRange === 0 || job.salary >= salaryRange)
+    (salaryRange === '' || job.salary >= salaryRange) // 年収フィルタリングを追加
   );
 
   return (
@@ -37,76 +41,24 @@ const JobSearch: React.FC<JobSearchProps> = ({ jobs }) => {
       {/* 左のフィルターセクション */}
       <div className="w-1/4 p-4 bg-gray-200">
         <h2 className="text-xl font-bold">カテゴリ</h2>
-
-        <div>
-          <label>
-            <input type="checkbox" value="事務" onChange={() => handleCategoryChange('事務')} />
-            事務
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="エンジニア" onChange={() => handleCategoryChange('エンジニア')} />
-            エンジニア
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="営業" onChange={() => handleCategoryChange('営業')} />
-            営業
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="デザイン" onChange={() => handleCategoryChange('デザイン')} />
-            デザイン
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="マーケティング" onChange={() => handleCategoryChange('マーケティング')} />
-            マーケティング
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="財務・経理" onChange={() => handleCategoryChange('財務・経理')} />
-            財務・経理
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="人事" onChange={() => handleCategoryChange('人事')} />
-            人事
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="カスタマーサポート" onChange={() => handleCategoryChange('カスタマーサポート')} />
-            カスタマーサポート
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="製造" onChange={() => handleCategoryChange('製造')} />
-            製造
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="checkbox" value="医療・介護" onChange={() => handleCategoryChange('医療・介護')} />
-            医療・介護
-          </label>
-        </div>
+        
+        {/* カテゴリのチェックボックス */}
+        {['事務', 'エンジニア', '営業', 'デザイン', 'マーケティング', '財務・経理', '人事', 'カスタマーサポート', '製造', '医療・介護'].map(category => (
+          <div key={category}>
+            <label>
+              <input type="checkbox" value={category} onChange={() => handleCategoryChange(category)} />
+              {category}
+            </label>
+          </div>
+        ))}
 
         <h2 className="text-xl font-bold mt-4">年収</h2>
-        <input
-          type="number"
-          value={salaryRange}
-          onChange={handleSalaryChange}
-          placeholder="年収を入力"
-          className="border p-2"
-        />
+        <select value={salaryRange} onChange={handleSalaryChange} className="border p-2">
+          <option value="">選択してください</option>
+          {salaryOptions.map(option => (
+            <option key={option} value={option}>{option}万円以上</option>
+          ))}
+        </select>
       </div>
 
       {/* 求人一覧 */}

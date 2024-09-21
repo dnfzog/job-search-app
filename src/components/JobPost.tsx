@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 // Job 型の定義
 interface Job {
   id: number;
-  title: string;
+  title: string; 
   category: string;
   salary: number;
 }
@@ -12,7 +12,7 @@ interface Job {
 const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
   const [title, setTitle] = useState('');
   const [category, setCategory] = useState('');
-  const [salary, setSalary] = useState<number | ''>('');
+  const [salary, setSalary] = useState<number | ''>(''); // 数字を直接入力
   const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -63,9 +63,15 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
         <div className="mb-4">
           <label className="block text-lg font-semibold">年収（万円）</label>
           <input
-            type="number"
+            type="text" // ここを変更して数字のみ入力できるようにする
             value={salary}
-            onChange={(e) => setSalary(Number(e.target.value))}
+            onChange={(e) => {
+              // 数字のみを許可する
+              const value = e.target.value;
+              if (/^\d*$/.test(value)) { // 数字のみの入力を許可
+                setSalary(value === '' ? '' : Number(value));
+              }
+            }}
             className="border p-2 w-full"
             placeholder="年収を入力"
             required

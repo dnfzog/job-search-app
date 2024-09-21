@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Job 型の定義
 interface Job {
   id: number;
   title: string;
@@ -16,13 +17,17 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newJob = {
-      id: Math.random(),
+    const newJob: Job = {
+      id: Math.random(),  // 一意のIDを生成
       title,
       category,
       salary: Number(salary),
     };
+
+    // 新しい求人を追加
     addJob(newJob);
+
+    // 投稿後、求人検索ページにリダイレクト
     navigate('/');
   };
 
@@ -31,7 +36,7 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
       <h1 className="text-2xl font-bold mb-4">求人投稿</h1>
 
       <form onSubmit={handleSubmit}>
-        {/* 並び順の変更：カテゴリ選択、年収入力、タイトル入力 */}
+        {/* カテゴリ選択 */}
         <div className="mb-4">
           <label className="block text-lg font-semibold">カテゴリ</label>
           <select
@@ -54,6 +59,7 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
           </select>
         </div>
 
+        {/* 年収入力 */}
         <div className="mb-4">
           <label className="block text-lg font-semibold">年収（万円）</label>
           <input
@@ -66,6 +72,7 @@ const JobPost: React.FC<{ addJob: (job: Job) => void }> = ({ addJob }) => {
           />
         </div>
 
+        {/* タイトル入力 */}
         <div className="mb-4">
           <label className="block text-lg font-semibold">タイトル</label>
           <input

@@ -1,4 +1,3 @@
-// JobSearch.tsx
 import React, { useState } from 'react';
 
 interface Job {
@@ -64,6 +63,10 @@ const JobSearch: React.FC<JobSearchProps> = ({ jobs }) => {
       {/* 求人一覧 */}
       <div className="w-3/4 p-4">
         <h1 className="text-2xl font-bold">求人一覧</h1>
+
+        {/* 該当件数の表示 */}
+        <p className="mb-4">該当件数: {filteredJobs.length}件</p>
+
         <div className="grid grid-cols-1 gap-4">
           {filteredJobs.map(job => (
             <div key={job.id} className="border p-4 rounded-lg shadow">
